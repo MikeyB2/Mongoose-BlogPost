@@ -1,7 +1,15 @@
 const express = require('express');
-const router = express.Router();
 const morgan = require('morgan');
-const bodyParser = require('body-parser');
+const app = express();
+const blogPostRouter = require('./blogPostRouter');
+app.use(morgan('common'));
+
+app.use(express.json());
+
+
+// Use Express router and modularize routes to /blog-posts.
+app.use('/blog-posts', blogPostRouter);
+// Add a couple of blog posts on server load so you'll automatically have some data to look at when the server starts.
 
 app.listen(process.env.PORT || 8080, () => {
     console.log(`Your app is listening on port ${process.env.PORT || 8080}`);
