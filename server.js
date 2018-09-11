@@ -11,9 +11,7 @@ app.use(express.json());
 app.use('/blog-posts', blogPostRouter);
 // Add a couple of blog posts on server load so you'll automatically have some data to look at when the server starts.
 
-// app.listen(process.env.PORT || 8080, () => {
-//     console.log(`Your app is listening on port ${process.env.PORT || 8080}`);
-// });
+
 function runServer() {
     const port = process.env.PORT || 8080;
     return new Promise((resolve, reject) => {
