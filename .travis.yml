@@ -1,2 +1,9 @@
 language: node_js
 node_js: node
+deploy:
+  provider: heroku
+  api_key:
+    secure: B4DEhFyS8C3RNH7JLk6yBiSFghnczgw76PRlmg9P3QYK0m7fpnRH/Zs2sCE3+FfVMIBguyMq/vdlrZ+zYnNvUDhWUe1pUx/bPxiQClRF4xYRoPdEWfPSGYpVZup9iI6pQwjpMWo24bNvJ79i1zeKTk+tizKgzromat+IibtiOr7z92i5WfJGY8rLWiXWnlVLMbhp0eKq/+sEwwL8z+kG44AR+tCy6E67lgbUrgcl69S42SmXettbJPQBCdJcKY/q6l9p5KsdnhwrDb/Pi7Az49RwMMk8AM2lbyX0aPUCgizQaAvZEkdey+P/m+3C1LT1tfMaV+gXWrMr9UfPiZZziR0i6mr3yZfqc/ZLUoU9rLkbih39v9NNfefIiUkVY8wK4+Ef9ig1lf0T9ALFftlK4WhQ0IwAp5um9oNf9lndG20hfhisBHxBolgH8btLjd9/fj5lDQ0Y4gDvVFXZziARoK5My/EiUkO6Ag7cP2x3UBTvyIR71150f9xJYfDXeJQYJYHm4d/ckr+/LQFQGi48Oxx/EpRBkVyqsZu3qtVXv9qkBf9v6lXolexWfGwlO+4HWSvnw62bLCeOhpXHGs/ZCB/L242xhJLvyYIpDaUBq7hYQn0X+9b5I0ot2+kBQ5xQNT4fz0Xt0Cmv/ATZRw8zTU1pgvNapX7TvhNRsjxh94Y=
+  app: https://desolate-lowlands-43375.herokuapp.com/
+  on:
+    repo: MikeyB2/blogPostApi
