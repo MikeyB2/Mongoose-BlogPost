@@ -1,28 +1,88 @@
 const express = require('express');
+const mongoose = require("mongoose");
 const morgan = require('morgan');
 const app = express();
-const blogPostRouter = require('./blogPostRouter');
+
+mongoose.Promise = global.Promise;
+
+const {
+    PORT,
+    DATABASE_URL
+} = require("./config");
+
 app.use(morgan('common'));
 
 app.use(express.json());
 
+const {
+    BlogPost
+} = require("./models");
 
-// Use Express router and modularize routes to /blog-posts.
-app.use('/blog-posts', blogPostRouter);
-// Add a couple of blog posts on server load so you'll automatically have some data to look at when the server starts.
+// GET /posts
 
-
-function runServer() {
-    const port = process.env.PORT || 8080;
-    return new Promise((resolve, reject) => {
-        server = app
-            .listen(port, () => {
-                console.log(`Your app is listening on port ${port}`);
-                resolve(server);
-            })
-            .on("error", err => {
-                reject(err);
+app.get("/posts", (req, res) => {
+    BlogPost.find()
+        .then(blogPost => {
+            res.json({
+                BlogPost: BlogPost.map(restaurant => BlogPost.serialize())
             });
+        })
+        .catch(err => {
+            console.error(err);
+            res.status(500).json({
+                message: "Internal server error"
+            });
+        });
+});
+
+// GET /posts/:id
+
+app.get("/posts/:id", (req, res) => {
+    BlogPost
+        // this is a convenience method Mongoose provides for searching
+        // by the object _id property
+        .findById(req.params.id)
+        .then(restaurant => res.json(restaurant.serialize()))
+        .catch(err => {
+            console.error(err);
+            res.status(500).json({
+                message: "Internal server error"
+            });
+        });
+});
+
+// POST /posts
+
+
+// PUT /posts/:id
+
+
+// DELETE /posts/:id
+
+
+// server start and close
+
+let server;
+
+function runServer(databaseUrl, port = PORT) {
+    return new Promise((resolve, reject) => {
+        mongoose.connect(
+            databaseUrl,
+            err => {
+                if (err) {
+                    return reject(err);
+                }
+                server = app
+                    .listen(port, () => {
+                        console.log(`Your app is listening on port ${port}`);
+                        resolve();
+                    })
+                    .on("error", err => {
+                        mongoose.disconnect();
+                        reject(err);
+                    });
+            }
+        );
     });
 }
 
@@ -30,21 +90,21 @@ function runServer() {
 // `server.close` does not return a promise on its own, so we manually
 // create one.
 function closeServer() {
-    return new Promise((resolve, reject) => {
-        console.log("Closing server");
-        server.close(err => {
-            if (err) {
-                reject(err);
-                // so we don't also call `resolve()`
-                return;
-            }
-            resolve();
+    return mongoose.disconnect().then(() => {
+        return new Promise((resolve, reject) => {
+            console.log("Closing server");
+            server.close(err => {
+                if (err) {
+                    return reject(err);
+                }
+                resolve();
+            });
         });
     });
 }
 
 if (require.main === module) {
-    runServer().catch(err => console.error(err));
+    runServer(DATABASE_URL).catch(err => console.error(err));
 }
 
 module.exports = {

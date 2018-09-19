@@ -4,6 +4,6 @@ deploy:
   provider: heroku
   api_key:
     secure: iP/lhs9ptlSyiLhXNhpcEBgVRjFcpQtyWdFZkDxWYgeUxq0i7n58ilu2HcvLY741LxeP2jf3ddEsBs4OX9gy2wqWAqf3u6yapFbMr2PjGpOk9eo4Ej21/ggjJrghfGOrkuFayAjgMlB/qO0tRLqjJD/dByfq+9adCN3E8Mo8pUG9Tkz1SHsKs4jxpLaHfEgVKzo6IBKy173q2jHNeydIrOGkIa9yjuv6PhqYzozn3NdxhRy5ZuP8zWMpEPxbszVnnPa3yD0TOl+POhs3Kfmvw4dJ+IOwgXrkjIdjt+P1njhII2qDN5N8pMYEsE3uIfAG2Kd0DCki2A2aKP3A2S+uQpLjukIg07FRO1knP2MCWKSlSiGURb6GRVHpJHx6YQ3U35weJbltwxNyOsTnanwueCMOKz1/zq+SIAVR90iqMvqBnSkL2e4LEzK/lJcXd7f5PNPo7q5xOeg7yCPmx9EW+VmTPX5lEAbw3ztpr67VCKjKtMQFmuJxqtSJA4fBjqNo4il/Tc54WVVfm/H4HMpX6zIHflhPmewguU7yxMMV6x2EV/4ugrJ14HQrMQ7vFS4sAL3oTnw2wCAdkhM/FInCg1osIzJ/ddnC+pmR6ifkqklOCnPwtrUPHbVhMSbWkrrF3z8KnIbFMWJTdPhUV3FL++kX8AenIrwFzLGtNcgVrus=
-  app: https://desolate-lowlands-43375.herokuapp.com/
+  app: https://intense-temple-48606.herokuapp.com/
   on:
-    repo: MikeyB2/blogPostApi
+    repo: /MikeyB2/Mongoose-BlogPost

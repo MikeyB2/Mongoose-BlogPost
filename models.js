@@ -9,7 +9,77 @@ const uuid = require('uuid');
 // Our concern in this example is with how the API layer
 // is implemented, and getting it to use an existing model.
 
+const mongoose = require("mongoose");
 
+const blogPostSchema = mongoose.Schema({
+    name: {
+        type: String,
+        required: true
+    },
+    borough: {
+        type: String,
+        required: true
+    },
+    cuisine: {
+        type: String,
+        required: true
+    },
+    address: {
+        building: String,
+        // coord will be an array of string values
+        coord: [String],
+        street: String,
+        zipcode: String
+    },
+    // grades will be an array of objects
+    grades: [{
+        date: Date,
+        grade: String,
+        score: Number
+    }]
+});
+
+
+// *virtuals* (http://mongoosejs.com/docs/guide.html#virtuals)
+// allow us to define properties on our object that manipulate
+// properties that are stored in the database. Here we use it
+// to generate a human readable string based on the address object
+// we're storing in Mongo.
+blogPostSchema.virtual("addressString").get(function () {
+    return `${this.address.building} ${this.address.street}`.trim();
+});
+
+// this virtual grabs the most recent grade for a restaurant.
+blogPostSchema.virtual("grade").get(function () {
+    const gradeObj =
+        this.grades.sort((a, b) => {
+            return b.date - a.date;
+        })[0] || {};
+    return gradeObj.grade;
+});
+
+// this is an *instance method* which will be available on all instances
+// of the model. This method will be used to return an object that only
+// exposes *some* of the fields we want from the underlying data
+blogPostSchema.methods.serialize = function () {
+    return {
+        id: this._id,
+        name: this.name,
+        cuisine: this.cuisine,
+        borough: this.borough,
+        grade: this.grade,
+        address: this.addressString
+    };
+};
+
+// note that all instance methods and virtual properties on our
+// schema must be defined *before* we make the call to `.model`.
+const blogPost = mongoose.model("Blog Post", blogPostSchema);
+
+module.exports = {
+    BlogPost
+};
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
 function StorageException(message) {
     this.message = message;
     this.name = "StorageException";
