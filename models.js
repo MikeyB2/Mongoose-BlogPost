@@ -21,8 +21,13 @@ const blogPostSchema = mongoose.Schema({
         required: true
     },
     author: {
-        type: String,
+        firstName: String,
+        lastName: String,
         required: true
+    },
+    entry: {
+        type: Date,
+        default: Date.now
     }
 });
 
@@ -53,13 +58,14 @@ blogPostSchema.methods.serialize = function () {
         id: this._id,
         title: this.title,
         content: this.content,
-        author: this.authorName
+        author: this.authorName,
+        entry: this.entry
     };
 };
 
 // note that all instance methods and virtual properties on our
 // schema must be defined *before* we make the call to `.model`.
-const BlogPost = mongoose.model("Blog Post", blogPostSchema);
+const BlogPost = mongoose.model("BlogPost", blogPostSchema);
 
 module.exports = {
     BlogPost

@@ -23,14 +23,12 @@ const {
 app.get("/posts", (req, res) => {
     BlogPost.find()
         .then(blogPost => {
-            res.json({
-                blogPost: blogPost.map(blogPost => blogPost.serialize())
-            });
+            res.json(blogPost.map(blogPost => blogPost.serialize()));
         })
         .catch(err => {
             console.error(err);
             res.status(500).json({
-                message: "Internal server error"
+                message: "What did you do!"
             });
         });
 });
@@ -46,7 +44,7 @@ app.get("/posts/:id", (req, res) => {
         .catch(err => {
             console.error(err);
             res.status(500).json({
-                message: "Internal server error"
+                message: "What did you do!"
             });
         });
 });
@@ -73,7 +71,7 @@ app.post("/posts", (req, res) => {
         .catch(err => {
             console.error(err);
             res.status(500).json({
-                message: "Internal server error"
+                message: "What did you do!"
             });
         });
 });
@@ -111,7 +109,7 @@ app.put("/posts/:id", (req, res) => {
         })
         .then(blogPost => res.status(204).end())
         .catch(err => res.status(500).json({
-            message: "Internal server error"
+            message: "What did you do!"
         }));
 });
 
@@ -121,7 +119,7 @@ app.delete("/posts/:id", (req, res) => {
     BlogPost.findByIdAndRemove(req.params.id)
         .then(blogPost => res.status(204).end())
         .catch(err => res.status(500).json({
-            message: "Internal server error"
+            message: "What did you do!"
         }));
 });
 
