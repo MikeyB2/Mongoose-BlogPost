@@ -1,5 +1,3 @@
-const uuid = require('uuid');
-
 // This module provides volatile storage, using a `BlogPost`
 // model. We haven't learned about databases yet, so for now
 // we're using in-memory storage. This means each time the app stops, our storage
@@ -23,7 +21,6 @@ const blogPostSchema = mongoose.Schema({
     author: {
         firstName: String,
         lastName: String,
-        required: true
     },
     entry: {
         type: Date,
