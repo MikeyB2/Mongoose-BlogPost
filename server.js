@@ -26,18 +26,12 @@ const {
 app.get("/authors", (req, res) => {
     Author.find()
         .then(author => {
-            res.json(author.map(author => {
-                return {
-                    id: author._id,
-                    name: `${author.firstName} ${author.lastName}`,
-                    userName: author.userName
-                }
-            }));
+            res.json(author.map(author => author.serialize()));
         })
         .catch(err => {
             console.error(err);
             res.status(500).json({
-                message: "What did you do!1"
+                message: "What did you do!4"
             });
         });
 });
@@ -71,11 +65,7 @@ app.post("/authors", (req, res) => {
                         lastName: req.body.lastName,
                         userName: req.body.userName
                     })
-                    .then(author => res.status(201).json({
-                        _id: author.id,
-                        name: `${author.firstName} ${author.lastName}`,
-                        userName: author.userName
-                    }))
+                    .then(author => res.status(201).json(author.serialize()))
                     .catch(err => {
                         console.error(err);
                         res.status(500).json({
@@ -178,8 +168,6 @@ app.get("/posts", (req, res) => {
 
 app.get("/posts/:id", (req, res) => {
     BlogPost
-        // this is a convenience method Mongoose provides for searching
-        // by the object _id property
         .findById(req.params.id)
         .then(blogPost => res.json(blogPost.serialize()))
         .catch(err => {
@@ -207,7 +195,7 @@ app.post("/posts", (req, res) => {
     BlogPost.create({
             title: req.body.title,
             content: req.body.content,
-            author: req.body.author,
+            author: req.body.id,
         })
         .then(blogPost => res.status(201).json(blogPost.serialize()))
         .catch(err => {

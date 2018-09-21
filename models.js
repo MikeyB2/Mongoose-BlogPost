@@ -1,5 +1,9 @@
 const mongoose = require("mongoose");
 
+const commentSchema = mongoose.Schema({
+    content: 'string'
+});
+
 const authorSchema = mongoose.Schema({
     firstName: 'string',
     lastName: 'string',
@@ -8,6 +12,15 @@ const authorSchema = mongoose.Schema({
         unique: true
     }
 });
+
+authorSchema.methods.serialize = function () {
+    return {
+        id: this._id,
+        firstName: this.firstName,
+        lastName: this.lastName,
+        userName: this.userName
+    };
+};
 
 const blogPostSchema = mongoose.Schema({
     title: {
@@ -26,7 +39,8 @@ const blogPostSchema = mongoose.Schema({
     entry: {
         type: Date,
         default: Date.now
-    }
+    },
+    comments: [commentSchema]
 });
 
 blogPostSchema.pre('find', function (next) {
@@ -49,15 +63,18 @@ blogPostSchema.methods.serialize = function () {
         title: this.title,
         content: this.content,
         author: this.authorName,
-        entry: this.entry
+        entry: this.entry,
+        comments: this.comments
     };
 };
+
 
 
 
 // tie the database in the first "" part of the method
 const Author = mongoose.model('authors', authorSchema);
 const BlogPost = mongoose.model("blogposts", blogPostSchema);
+
 
 
 module.exports = {
