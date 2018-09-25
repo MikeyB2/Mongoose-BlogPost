@@ -13,6 +13,10 @@ const {
 } = require('../config');
 const expect = chai.expect;
 
+const {
+    BlogPost
+} = require('../models')
+
 chai.use(chaiHttp);
 
 function seedBlogPosts() {
