@@ -135,7 +135,7 @@ app.put('/authors/:id', (req, res) => {
 // DELETE /authors/:id
 
 app.delete("/authors/:id", (req, res) => {
-    BlogPost.remove({
+    Author.remove({
             author: req.params.id
         })
         .then(() => {
