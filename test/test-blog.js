@@ -8,10 +8,10 @@ const {
     runServer,
     closeServer
 } = require("../server");
-const {
-    TEST_DATABASE_URL
-} = require('../config');
+const { TEST_DATABASE_URL } = require('../config');
 const expect = chai.expect;
+
+const { BlogPost } = require('../models.js');
 
 chai.use(chaiHttp);
 
@@ -21,6 +21,7 @@ function seedBlogPosts() {
 
     for (let i = 1; i <= 10; i++) {
         seedData.push(generateBlogPosts());
+        // BlogPost.create(generateBlogPosts());
     }
     // this will return a promise
     return BlogPost.insertMany(seedData);

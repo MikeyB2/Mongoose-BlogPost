@@ -32,10 +32,7 @@ const blogPostSchema = mongoose.Schema({
         required: true
     },
     // add the author schema to reference the author so that we can tie the author to their blogposts tieing the ref to your database
-    author: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'authors'
-    },
+    author: { firstName: String, lastName: String },
     entry: {
         type: Date,
         default: Date.now
@@ -80,5 +77,4 @@ const BlogPost = mongoose.model("blogposts", blogPostSchema);
 module.exports = {
     Author,
     BlogPost
-
 };

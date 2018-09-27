@@ -6,8 +6,8 @@ const app = express();
 mongoose.Promise = global.Promise;
 
 const {
-    PORT,
-    DATABASE_URL
+    DATABASE_URL,
+    PORT
 } = require("./config");
 
 app.use(morgan('common'));
@@ -116,8 +116,8 @@ app.put('/authors/:id', (req, res) => {
                     .findByIdAndUpdate(req.params.id, {
                         $set: updated
                     }, {
-                        new: true
-                    })
+                            new: true
+                        })
                     .then(updatedAuthor => {
                         res.status(200).json({
                             id: updatedAuthor.id,
@@ -136,8 +136,8 @@ app.put('/authors/:id', (req, res) => {
 
 app.delete("/authors/:id", (req, res) => {
     BlogPost.remove({
-            author: req.params.id
-        })
+        author: req.params.id
+    })
         .then(() => {
             Author.findByIdAndRemove(req.params.id)
                 .then(author => res.status(204).end())
@@ -193,10 +193,10 @@ app.post("/posts", (req, res) => {
     }
 
     BlogPost.create({
-            title: req.body.title,
-            content: req.body.content,
-            author: req.body.id,
-        })
+        title: req.body.title,
+        content: req.body.content,
+        author: req.body.id,
+    })
         .then(blogPost => res.status(201).json(blogPost.serialize()))
         .catch(err => {
             console.error(err);
@@ -254,10 +254,12 @@ app.delete("/posts/:id", (req, res) => {
 let server;
 
 // start the server
-function runServer(databaseUrl, port = PORT) {
+function runServer(DATABASE_URL, port = PORT) {
+    console.log("TEST:" + DATABASE_URL);
     return new Promise((resolve, reject) => {
+
         mongoose.connect(
-            databaseUrl,
+            DATABASE_URL,
             err => {
                 if (err) {
                     return reject(err);
