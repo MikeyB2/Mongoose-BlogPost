@@ -11,13 +11,9 @@ const {
 const { TEST_DATABASE_URL } = require('../config');
 const expect = chai.expect;
 
-<<<<<<< HEAD
-const { BlogPost } = require('../models.js');
-=======
 const {
     BlogPost
 } = require('../models')
->>>>>>> 3070a592da73dd7d98d0725d84513cda7a5cf4a5
 
 chai.use(chaiHttp);
 
