@@ -135,9 +135,15 @@ app.put('/authors/:id', (req, res) => {
 // DELETE /authors/:id
 
 app.delete("/authors/:id", (req, res) => {
+<<<<<<< HEAD
     BlogPost.remove({
         author: req.params.id
     })
+=======
+    Author.remove({
+            author: req.params.id
+        })
+>>>>>>> 3070a592da73dd7d98d0725d84513cda7a5cf4a5
         .then(() => {
             Author.findByIdAndRemove(req.params.id)
                 .then(author => res.status(204).end())
